@@ -5,7 +5,7 @@ const thoughtSchema = new Schema(
     {
         thoughtText: {
             type: String,
-            // Required,
+            required: true,
             // Must be between 1 and 280 characters,
         },
         createdAt: {

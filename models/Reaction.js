@@ -8,13 +8,13 @@ const reactionSchema = new Schema(
             // Default value is set to a new ObjectId,
         },
         reactionBody: {
-            // String,
-            // Required,
+            type: String,
+            required: true,
             // 280 character maximum,
         },
         username: {
-            // String,
-            // Required,
+            type: String,
+            required: true,
         },
         createdAt: {
             // Date,

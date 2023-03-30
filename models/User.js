@@ -4,14 +4,14 @@ const { Schema, model } = require('mongoose');
 const userSchema = new Schema(
     {
         username: {
-            // String,
+            type: String,
             // Unique,
-            // Required,
+            required: true,
             // Trimmed,
         },
         email: {
-            // String,
-            // Required,
+            type: String,
+            required: true,
             // Unique,
             // Must match a valid email address (look into Mongoose's matching validation),
         },
