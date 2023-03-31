@@ -1,12 +1,9 @@
-const { Schema, model } = require('mongoose');
-// const Reaction = require('./Reaction');
+const { Schema, Types } = require('mongoose');
+// TODO import date formatting 
 
 const reactionSchema = new Schema(
     {
         reactionId: {
-            // Use Mongoose's ObjectId data type,
-            // Default value is set to a new ObjectId,
-            // DOUBLE CHECK THIS
             type: Schema.Types.ObjectId,
             default: () => new Types.ObjectId(),
         },
@@ -23,9 +20,8 @@ const reactionSchema = new Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            // Date,
-            // Set default value to the current timestamp,
-            // Use a getter method to format the timestamp on query,
+            // format this
+            get: timestamp => timestamp,
         },
     },
     {
@@ -35,7 +31,5 @@ const reactionSchema = new Schema(
         id: false,
       }
 );
-
-// This will not be a model, but rather will be used as the "reaction" field's subdocument schema in the "Thought" model.
 
 module.exports = reactionSchema;

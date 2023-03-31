@@ -1,30 +1,26 @@
-// Double check this
-const { Schema, Types } = require('mongoose');
+const { Schema, model } = require('mongoose');
+const reactionSchema = require('./Reaction');
+// import date format from utils once written
 
 const thoughtSchema = new Schema(
     {
         thoughtText: {
             type: String,
-            required: true,
+            required: 'you must write something',
             minlength: 1,
             maxlength: 280,
         },
         createdAt: {
             type: Date,
             default: Date.now,
-            // Date,
-            // Set default value to the current timestamp,
-            // Use a getter method to format the timestamp on query,
+            // format this
+            get: timestamp => timestamp,
         },
-        // (The user that created this thought)
         username: { 
             type: String,
             required: true,
         },
-        // (These are like replies)
-        reactions: {
-            // Array of nested documents created with the 'reactionSchema'
-        },
+        reactions: [reactionSchema]
     },
     {
         toJSON: {
@@ -34,10 +30,6 @@ const thoughtSchema = new Schema(
     }
 );
 
-
-// Create a virtual called "reactionCount" that retrieves the length of the thought's "reactions" array field on query.
-
-// DOUBLE CHECK THIS
 thoughtSchema
   .virtual('reactionCount')
   // Getter
@@ -45,5 +37,6 @@ thoughtSchema
     return this.reactions.length;
   });
 
+const Thought = model('Thought', thoughtSchema)
 
-module.exports = thoughtSchema;
+module.exports = Thought;
