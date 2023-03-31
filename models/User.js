@@ -16,6 +16,8 @@ const userSchema = new Schema(
             // Must match a valid email address (look into Mongoose's matching validation),
         },
         thoughts: {
+            // type: Schema.Types.ObjectId,
+            // ref: 'Thought',
             // Array of "_id values referencing the "Thought" model
         },
         friends: {
@@ -34,12 +36,13 @@ const userSchema = new Schema(
 
 
 // DOUBLE CHECK THIS
-// userSchema
-//   .virtual('friendCount')
-//   // Getter
-//   .get(function () {
-//     return `${this.first} ${this.last}`;
-//   });
+userSchema
+  .virtual('friendCount')
+  // Getter
+  .get(function () {
+    return this.friends.length;
+  });
+
 
 // Initialize our User model
 const User = model('user', userSchema);
