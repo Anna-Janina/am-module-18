@@ -1,4 +1,3 @@
-// Double check this
 const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema(
