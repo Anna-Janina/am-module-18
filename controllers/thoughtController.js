@@ -51,12 +51,50 @@ const thoughtController = {
                 res.status(500).json(err);
              });
     },
-    
-    
 
-    
-// updateThought,
-// deleteThought,
+    // updateThought
+    updateThought(req, res) {
+        Thought.findOneAndUpdate(
+            { _id: req.params.thoughtId },
+            { $set: req.body },
+            { runValidators: true, new: true }
+        )
+        .then((thoughtData) => {
+            if (!thoughtData) {
+              return res.status(404).json({ message: 'No thought with this ID' });
+            }
+            res.json(thoughtData);
+        })
+        .catch((error) => {
+            console.log(error)
+            res.status(500).json(error)
+        });
+    },
+
+    // deleteThought
+    deleteThought(req, res) {
+        Thought.findOneAndRemove({ _id: req.params.applicationId })
+            .then((thoughtData) =>
+            !thoughtData
+            ? res.status(404).json({ message: 'No thought with this Id!' })
+            : User.findOneAndUpdate(
+                { thoughts: req.params.thoughtId },
+                { $pull: { thoughts: req.params.thoughtId } },
+                { new: true }
+            )
+        )
+        .then((thoughtData) =>
+        !thoughtData
+          ? res.status(404).json({
+              message: 'Thought created but no user with this id!',
+            })
+          : res.json({ message: 'Thought successfully deleted!' })
+      )
+      .catch((err) => res.status(500).json(err));
+    },
+
+
+
 // createReaction,
 // deleteReaction,
 }
