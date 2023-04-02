@@ -1,14 +1,15 @@
 const { User, Thought } = require('../models');
 
 
-// DOUBLE CHECK THIS PART - Copied from activity
-// getUser,
+
+//     getUser,
 //     getSingleUser,
 //     createUser,
 //     updateUser,
 //     deleteUser,
 //     addFriend,
 //     deleteFriend,
+
 
 const userController = {
    // get all users
