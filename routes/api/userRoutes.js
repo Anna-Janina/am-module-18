@@ -11,7 +11,7 @@ const {
 
 
 // /api/users GET all and POST 
-router.route('/').get(getUser).post(createUser);
+router.route('/').get(getUsers).post(createUser);
 
 // // /api/users/:userId GET single user, PUT and DELETE by its _id
 router
