@@ -100,19 +100,19 @@ const thoughtController = {
     },
 
     // createReaction
-    createReaction(req, res) {
-        Thought.findOneAndUpdate(
-          { _id: req.params.thoughtId },
-          { $addToSet: { tags: req.body } },
-          { runValidators: true, new: true }
-        )
-          .then((thoughtData) =>
-            !thoughtData
-              ? res.status(404).json({ message: 'No thought with this id!' })
-              : res.json(thoughtData)
-          )
-          .catch((err) => res.status(500).json(err));
-      },
+    async createReaction(req, res) {
+        try {
+            const thoughtData = await Thought.findOneAndUpdate({ _id: req.params.thoughtId },
+                { $addToSet: { tags: req.body } }, { runValidators: true, new: true })
+
+            if (!thoughtData) {
+                return res.status(404).json({ message: 'No thought with this id!' })
+            }
+        } catch (err) {
+                console.log(err)
+                res.status(500).json(err)
+        }
+    },
 
     // deleteReaction
     deleteReaction(req, res) {

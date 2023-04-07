@@ -83,42 +83,37 @@ const userController = {
     },
 
     // addFriend
-    addFriend(req, res) {
-        User.findOneAndUpdate(
-            { _id: req.params.userId },
-            { $addToSet: { friends: req.params.friendId } },
-            { new: true }
-        )
-            .then((dbUserData) => {
-                if (!dbUserData) {
-                return res.status(404).json({ message: "No user with this id!" });
+    async addFriend(req, res) {
+        try {
+            const userData = await User.findOneAndUpdate({ _id: req.params.userId },
+                { $addToSet: { friends: req.params.friendId } },
+                { new: true })
+
+                if (!userData) {
+                    return res.status(404).json({ message: "No user with this id!" })
+                }
+            } catch (err) {
+                console.log(err)
+                res.status(500).json(err)
             }
-                res.json(dbUserData);
-            })
-            .catch((err) => {
-                console.log(err);
-                res.status(500).json(err);
-            });
     },
 
+
     // deleteFriend
-    deleteFriend(req, res) {
-        User.findOneAndUpdate(
-            { _id: req.params.userId },
-            { $pull: { friends: req.params.friendId } },
-            { new: true }
-        )
-            .then((dbUserData) => {
-                if (!dbUserData) {
-                return res.status(404).json({ message: "No user with this id!" });
-            }
-                res.json(dbUserData);
-            })
-            .catch((err) => {
+    async deleteFriend(req, res) {
+        try {
+            const userData = await User.findOneAndUpdate({ _id: req.params.userId },
+                { $pull: { friends: req.params.friendId } }, { new: true })
+
+                if (!userData) {
+                    return res.status(404).json({ message: "No user with this id!" });
+                }
+            } catch (err) {
                 console.log(err);
-                res.status(500).json(err);
-            });
+                res.status(500).json(err)
+            }
     },
+
 };
 
 module.exports = userController;
