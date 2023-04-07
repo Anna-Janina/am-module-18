@@ -15,21 +15,23 @@ const userController = {
             });
     },
     // getSingleUser
-    getSingleUser(req, res) {
-        User.findOne({ _id: req.params.studentId })
+    async getSingleUser(req, res) {
+        try {
+            const userData = await User.findOne({ _id: req.params.userId })
             .select('-__v')
-            .populate('friends')
-            .populate('thoughts')
-            .then((userData) => {
-                if (!userData) {
-                return res.status(404).json({ message: "No user with this id!" });
+            // tood, lok into friends and thoughts to add these back in
+            // .populate('friends')
+            // .populate('thoughts')
+
+            if (!userData) {
+                return res.status(404).json({ message: 'no user with this id found'})
             }
-            res.json(userData);
-        })
-            .catch((err) => {
-                console.log(err);
-                return res.status(500).json(err);
-            });
+
+            res.json(userData)
+        } catch (err) {
+            console.log(err)
+            res.status(500).json(err)
+        }
     },
 
     // createUser
@@ -40,20 +42,30 @@ const userController = {
     },
 
     // updateUser
-    updateUser(req, res) {
-        User.findOneAndUpdate(
-            { _id: req.params.userId },
-            { $set: req.body },
-            { runValidators: true, new: true },
+   async updateUser(req, res) {
+    try {
+        const userData = await User.findOneAndUpdate(
+            {
+            _id: req.params.userId,
+        },
+        {
+            $set: req.body
+        },
+        {
+            runValidators: true,
+            new: true,
+        }
         )
-            .then((userData) =>
-                !user
-                ? res
-                .status(404)
-                .json({ message: 'No user found with that ID :(' })
-                : res.json(userData)
-            )
-            .catch((err) => res.status(500).json(err));
+
+        if (!userData) {
+            return res.status(404).json({message: 'no user with this id was found'})
+        }
+
+        res.json(userData)
+    } catch (err) {
+        console.log(err)
+        res.status(500).json(err)
+    }
     },
 
     // deleteUser
@@ -62,7 +74,7 @@ const userController = {
             const userData = await User.findOneAndDelete({ _id: req.params.userId })
 
             if (!userData) {
-                return res.status(404).json({message: 'no user with this id was foiund'})
+                return res.status(404).json({message: 'no user with this id was found'})
             }
         } catch (err) {
             console.log(err)
