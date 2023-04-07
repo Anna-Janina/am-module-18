@@ -57,27 +57,17 @@ const userController = {
     },
 
     // deleteUser
-    deleteUser(req, res) {
-        User.findOneAndDelete({ _id: req.params.userId })
-            .then((userData) =>
-                !user
-                ? res.status(404).json({ message: 'No such user exists' })
-                : Course.findOneAndUpdate(
-              { students: req.params.studentId },
-              { $pull: { students: req.params.studentId } },
-              { new: true }
-            ))
-            .then((course) =>
-                !course
-                ? res.status(404).json({
-                message: 'User deleted, but no courses found',
-                })
-                : res.json({ message: 'User successfully deleted' })
-            )
-            .catch((err) => {
-                console.log(err);
-                res.status(500).json(err);
-            });
+    async deleteUser(req, res) {
+        try {
+            const userData = await User.findOneAndDelete({ _id: req.params.userId })
+
+            if (!userData) {
+                return res.status(404).json({message: 'no user with this id was foiund'})
+            }
+        } catch (err) {
+            console.log(err)
+            res.status(500).json(err)
+        }
     },
 
     // addFriend
