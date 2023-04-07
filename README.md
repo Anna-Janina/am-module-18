@@ -8,29 +8,32 @@
 - [Technologies used](#technologies-used)
 - [User Story](#user-story)
 - [Acceptance Criteria](#acceptance-criteria)
-<!-- - [Schema](#schema) -->
-- [Deployed link & Screenshot](#deployed-link--screenshot)
+- [License](#license)
 
 
 **Project Description**
 -
-<!-- This project is a full-stack application using Model-View-Controller (MVC) paradigm and is deployed on Heroku. It is a tech blog website where users can post, added and delete a comment. Users can login safely into their account (username + password). -->
+A social media network application to create, update and delete your thoughts.
+
+
+https://drive.google.com/file/d/1QEBbY-EfkfGWTT8ca2lDicFvMpJSnqNp/view
 
 **How to Run**
 -
-<!-- 1. Clone the Repository on to your machine.
+1. Clone the Repository on to your machine.
 2. Open the terminal and ensure you are in the right file path.
 3. Run the command npm install to download the packages.
-4. Log into my sequel and run the command source db/schema.sql to create the database.
-5. Run the command npm run seed to seed the database.
-6. Then run the command node start to run the software.
-7. The application will then begin to run locally. -->
+4. Then run the command node start to run the software.
+5. The application will then begin to run locally. -->
 
 
 **Technologies used:**
 -
-- dotenv
-- 
+- Node.js
+- MongoDB
+- Mongoose
+- Express
+- Moment
 
 
 **User Story**
@@ -53,6 +56,6 @@
 - THEN I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s friend list
 
 
-**Deployed link & Screenshot**
+**License**
 -
--
+- Copyright (c) Anna Marcus. MIT license.
